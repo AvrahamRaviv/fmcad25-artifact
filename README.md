@@ -1,86 +1,87 @@
-# FVOD: Artifact for VMCAI 2026
+# FVOD: Formal Verification for Object Detection
 
-This repository contains the artifact accompanying our VMCAI 2026 paper:
+This repository contains the implementation accompanying our paper:
 
-**Towards Formal Verification of Deep Neural Networks for Object Detection.**
+**Towards Formal Verification of Deep Neural Networks for Object Detection**
 
-DOI: [Zenodo link](https://zenodo.org/records/17098701)
- 
-SHA256 checksum: `278d80012405bfaf24bd7443f09e88ed61dd254c43cbceae752bb3c8dae1604f`
+The code extends state-of-the-art neural network verification techniques to object detection models, with a particular focus on verifying IoU-related properties.
 
+---
 
 ## 📁 Repository Structure
 
 ```
- ├── abcrown/    # Extended version of alpha-beta-CROWN with OD/IoU verification functionality  
- ├── train/      # Pre-processing scripts (training models, etc.) and data preparation  
- ├── analyze/    # Post-processing and result analysis  
- ```
+ ├── abcrown/    # Extended version of alpha-beta-CROWN with OD / IoU verification support
+ ├── train/      # Pre-processing scripts (training models, data preparation)
+ ├── analyze/    # Post-processing and result analysis
+```
 
-- **abcrown/**: Forked and extended version of [alpha-beta-CROWN](https://github.com/Verified-Intelligence/alpha-beta-CROWN), adding support for object detection and IoU verification.
-- **train/** and **analyze/**: Contain pre- and post-processing utilities.
-- The main entry point is [`abcrown/FVOD/verify_fc.py`](abcrown/FVOD/verify_fc.py), which demonstrates minimal example usage. You can customize arguments as needed.
+* **abcrown/**: A fork of [alpha-beta-CROWN](https://github.com/Verified-Intelligence/alpha-beta-CROWN), extended to support object detection and IoU-based verification conditions.
+* **train/** and **analyze/**: Utilities for preparing models and analyzing verification results.
+* The main entry point is [`abcrown/FVOD/verify_fc.py`](abcrown/FVOD/verify_fc.py), which provides a minimal, configurable verification workflow.
+
+---
 
 ## 📦 Requirements and Installation
 
-The artifact was tested on a Mac with an Apple M3 chip (8-core CPU, 8-core GPU), 16GB RAM, running macOS 15.4.1 (24E263).
+The code is built on top of the **alpha-beta-CROWN** verification framework.
+Our implementation is based on the April 2024 version of alpha-beta-CROWN (commit `1a3533a`).
 
-This artifact builds upon the [alpha-beta-CROWN](https://github.com/Verified-Intelligence/alpha-beta-CROWN) framework. Our repository is based on the April 2024 release of alpha-beta-CROWN (commit `1a3533a`).
+### Setup Instructions
 
-To set up the environment:
+1. **Clone alpha-beta-CROWN and checkout the required commit:**
 
-1. **Clone the repository and checkout the specific commit:**
+```bash
+git clone --recursive https://github.com/Verified-Intelligence/alpha-beta-CROWN.git
+cd alpha-beta-CROWN
+git checkout 1a3533a
+```
 
-   ```bash
-   git clone --recursive https://github.com/Verified-Intelligence/alpha-beta-CROWN.git
-   cd alpha-beta-CROWN
-   git checkout 1a3533a
-   ```
+2. **Create and activate a conda environment:**
 
-2. **Create and activate the conda environment:**
-
-   ```bash
-   conda create -n alpha-beta-crown python=3.11 -y
-   conda activate alpha-beta-crown
-   ```
+```bash
+conda create -n alpha-beta-crown python=3.11 -y
+conda activate alpha-beta-crown
+```
 
 3. **Install dependencies:**
 
-   ```bash
-   pip install -r complete_verifier/requirements.txt
-   ```
-Our repository uses only modified pure-Python scripts and introduces no additional dependencies beyond those required by alpha-beta-CROWN.
+```bash
+pip install -r complete_verifier/requirements.txt
+```
 
-After installing alpha-beta-CROWN, replace its source code with our modified version provided in the `abcrown/` folder of this repository.
+This repository introduces only **pure-Python modifications** and does not add dependencies beyond those required by alpha-beta-CROWN.
 
-Here’s the `Usage` section to add to your `README.md`:
+After installation, replace the original alpha-beta-CROWN source code with the modified version provided in this repository under the `abcrown/` directory.
+
+---
 
 ## Usage
 
 ### Minimal Example
 
-After completing installation and replacing the alpha-beta-CROWN source with our modified `abcrown/` folder, you can run a minimal verification example using:
+After setup, a minimal verification example can be run using:
 
 ```bash
 python abcrown/FVOD/verify_fc.py --config abcrown/complete_verifier/exp_configs/OD/d_loc_init.yaml
-````
+```
 
-This uses a configuration file for fast evaluation and correctness check.
+This configuration is intended for fast validation and sanity checking.
 
 ### General Usage
 
-To run verification with any custom configuration YAML:
+To run verification with a custom configuration:
 
 ```bash
 python abcrown/FVOD/verify_fc.py --config path/to/your_config.yaml
 ```
 
-You may customize model path, dataset, perturbation bounds, and verification settings directly in the YAML file.
+Verification behavior (model, dataset, perturbation bounds, and IoU thresholds) can be customized directly via the YAML configuration files.
+
+---
 
 ## 📄 License
 
 MIT License
 
-Permission is hereby granted to the VMCAI 2026 Program Committee to download, use, and execute this artifact solely for the purpose of artifact evaluation.
-
-The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement.
+The software is provided “as is”, without warranty of any kind, express or implied.
